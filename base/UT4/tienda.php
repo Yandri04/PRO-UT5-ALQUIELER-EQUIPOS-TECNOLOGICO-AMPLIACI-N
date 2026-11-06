@@ -241,11 +241,21 @@ class tienda
         usort($arrayOrdenadorPorNombre, fn($a, $b) => strcasecmp($a->tipo(), $b->tipo()));
         return $arrayOrdenadorPorNombre;
     }
-    
+
     public function ordenarClientesPorAlquileres(): array
     {
         $arrayOrdenadorPorAlquileresClientes = $this->clientes;
         usort($arrayOrdenadorPorAlquileresClientes, fn($a, $b) => $a->numEquiposAlquilados() <=> $b->numEquiposAlquilados());
         return $arrayOrdenadorPorAlquileresClientes;
+    }
+    public function buscarClientePorNombre(string $nombre)
+    {
+        foreach ($this->clientes as $cli) {
+            if ($cli->nombre === $nombre) {
+                return $cli;
+            } else {
+                return null;
+            }
+        }
     }
 }

@@ -1,48 +1,50 @@
 <?php
 require_once 'tienda.php';
+session_start();
 
-$t1 = new tienda("MERCADONA");
-/*
-verificamos los listar
-echo $t1->listarClientes();
-echo "\n";
-echo $t1->listarEquipos();
-*/
+if (!isset($_SESSION["tienda"])) {
+    $t1 = new tienda("MERCADONA");
 
-/*
-incluir equipos
-$t1->incluirPortatil("portatilP1", 32, 12.40, 1024);
-$t1->incluirCamara("campP1", 33, 15.23, "epson", 5000, 10000);
-$t1->incluirProyector("proyectorP1", 34, 74.25, [1, 2, 3, 4], "QHD");
-echo $t1->listarEquipos();
-*/
+    $t1->incluirPortatil("portatilP1", 32, 12.40, 1024);
+    $t1->incluirCamara("campP1", 33, 15.23, "epson", 5000, 10000);
+    $t1->incluirProyector("proyectorP1", 34, 74.25, [1, 2, 3, 4], "QHD");
 
-/* incluir cliente
-$t1->incluirClientes("LAMACARENA",1);
-echo $t1->listarClientes();
-*/
+    $t1->incluirClientes("LAMACARENA", 1);
 
-/* 
-Alquilar y devolver equipos
-$t1->alquilarClienteEquipo(1,1);
-echo $t1->listarEquipos();
-$t1->devolverClienteEquipo(1,1);
-echo "\n";
-echo $t1->listarEquipos();
-*/
+    $t1->alquilarClienteEquipo(1, 1);
+    $t1->devolverClienteEquipo(1, 1);
 
-echo "ASEGURABLES";
-echo "\n";
-print_r($t1->equiposAsegurables());
-echo "\n";
-echo "ORDENADOS POR PRECIO";
-echo "\n";
-print_r($t1->ordenarEquiposPorPrecio());
-echo "\n";
-echo "ORDENADOS POR NOMBRES EQUIPOS";
-echo "\n";
-print_r($t1->ordenarEquiposPorNombre());
-echo "\n";
-echo "ORDENADOS POR Clientes Por Alquileres";
-echo "\n";
-print_r($t1->ordenarClientesPorAlquileres());
+    $_SESSION["tienda"] = $t1;
+} else {
+    $t1 = $_SESSION["tienda"];
+}
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <form action="" method="POST">
+            <fieldset>
+                <legend>Tienda</legend>
+                <h2>OPCIONES DE LAS TIENDA</h2>
+                <button>buscarClientePorNombre</button>
+
+            </fieldset>
+        </form>
+    </div>
+
+</body>
+
+</html>
