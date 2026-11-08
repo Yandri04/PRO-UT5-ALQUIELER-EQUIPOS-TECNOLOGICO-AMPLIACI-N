@@ -18,7 +18,17 @@ if (!isset($_SESSION["tienda"])) {
 } else {
     $t1 = $_SESSION["tienda"];
 }
+
 $ruta_carrito = empty($_SESSION['usuario_id']) ? "fase1/login.php" : "fase2/carrito.php";
+$equiposConfirmados = $_SESSION['eAlquilados'] ?? [];
+$txtEquiposConfirmados = [];
+foreach ($equiposConfirmados as $key => $value) {
+    $e = $t1->buscarEquipoPorNumero($value);
+    if ($e) {
+        array_push($txtEquiposConfirmados, $e->muestraResumen());
+    }
+}
+
 ?>
 
 
@@ -34,9 +44,13 @@ $ruta_carrito = empty($_SESSION['usuario_id']) ? "fase1/login.php" : "fase2/carr
 <body>
     <header>
         <h1>Tienda</h1>
-        <form action="fase1/login.php" method="POST">
-            <button type="submit">Login</button>
-        </form>
+        <?php if (!isset($_SESSION['usuario_nombre'])): ?>
+            <form action="fase1/login.php" method="POST">
+                <button type="submit">Login</button>
+            </form>
+        <?php else: ?>
+            <p><?php echo $_SESSION['usuario_nombre'] ?></p>
+        <?php endif; ?>
         <form action="fase1/logout.php" method="POST">
             <button type="submit">Logout</button>
         </form>
@@ -49,27 +63,59 @@ $ruta_carrito = empty($_SESSION['usuario_id']) ? "fase1/login.php" : "fase2/carr
             <h1>Productos</h1>
         </legend>
         <?php
-
         $equiposTienda = $t1->equipos;
 
+
+        echo "<table>";
+        echo "<tr>";
+        echo "<th>ESTADO</th>";
+        echo "<th>ID</th>";
+        echo "<th>DESCRIPCION</th>";
+
+
+
         foreach ($equiposTienda as $key => $value) {
-            echo "<p>" . $value->muestraResumen() . "</p>";
+            echo "<tr>";
+
+            echo "<td>" . ($value->estaAlquilado() ? "Alquilado" : "No alquilado") . "</td>";
+            echo "<td>" . $value->getNumero() . "</td>";
+
+            echo "<td>" . $value->muestraResumen() . "</td>";
 
             if (isset($_SESSION['usuario_nombre'])) {
+                $estaConfirmado = in_array($value->getNumero(), $equiposConfirmados);
         ?>
-                <form action="fase2/carrito.php" method="POST" style="display: inline-block; margin-bottom: 15px;">
-                    <button type="submit" name="nEquipo" value="<?php echo $value->getNumero(); ?>">
-                        Añadir al carrito
-                    </button>
-                </form>
-                <br>
+
+                <td>
+                    <?php if ($estaConfirmado): ?>
+                        <form action="fase3/devolverEquipo.php" method="POST" style="display: inline-block; margin-bottom: 15px;">
+                            <button type="submit" name="nEquipoDevolver" value="<?php echo $value->getNumero(); ?>">
+                                Devolver equipo
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <form action="fase2/carrito.php" method="POST" style="display: inline-block; margin-bottom: 15px;">
+                            <button type="submit" name="nEquipo" value="<?php echo $value->getNumero(); ?>">
+                                Añadir al carrito
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                </td>
         <?php
             }
+
+            echo "</tr>";
         }
+
+        echo "</table>";
         ?>
     </fieldset>
-
-
+    <fieldset>
+        <legend>Equipos Alquilados</legend>
+        <?php foreach ($txtEquiposConfirmados as $key => $value) { ?>
+            <p> <?php echo $value ?></p>
+        <?php } ?>
+    </fieldset>
 </body>
 
 </html>

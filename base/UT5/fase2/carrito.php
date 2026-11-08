@@ -5,6 +5,7 @@ $tienda = $_SESSION['tienda'];
 $usuarioActual = $_SESSION['usuario_id'];
 
 $carrito_equipos = [];
+$arrayEquiposConfirmadosCli = [];
 if (isset($_COOKIE['carrito_equipos'])) {
     $carrito_equipos = json_decode($_COOKIE['carrito_equipos'], true);
 }
@@ -36,25 +37,29 @@ if (isset($_POST['vaciar'])) {
     setcookie('carrito_equipos', json_encode($carrito_equipos), time() - 86400, "/");
 }
 if (isset($_POST['confirmar'])) {
+
     $hubo_error = false;
 
     foreach ($carrito_equipos as $key => $value) {
         try {
             $tienda->alquilarClienteEquipo($usuarioActual, $value);
+            array_push($arrayEquiposConfirmadosCli, $value);
         } catch (Exception $e) {
             echo "El equipo " . $value . " ya está alquilado.<br>";
             $hubo_error = true;
             break;
         }
+        header("Location: ../index.php");
     }
     if (!$hubo_error) {
         setcookie('carrito_equipos', '', time() - 86400, "/");
         $carrito_equipos = [];
     }
 }
-
+$_SESSION['eAlquilados'] = $arrayEquiposConfirmadosCli;
 $tienda = $_SESSION['tienda'];
 $txt = "";
+
 
 foreach ($carrito_equipos as $value) {
     $equipoActual = $tienda->buscarEquipoPorNumero($value);
