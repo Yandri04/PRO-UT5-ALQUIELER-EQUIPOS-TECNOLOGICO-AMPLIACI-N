@@ -32,10 +32,14 @@ if (!isset($_SESSION["tienda"])) {
 </head>
 
 <body>
-    <header>
+<header>
         <h1>Tienda</h1>
-        <button>Login</button>
-        <button>Logout</button>
+        <form action="funciones/login.php" method="POST" style="display: inline;">
+            <button type="submit">Login</button>
+        </form>
+        <form action="funciones/logout.php" method="POST" style="display: inline;">
+            <button type="submit">Logout</button>
+        </form>
     </header>
     <form action="" method="POST">
         <fieldset>

@@ -6,7 +6,6 @@ class portatil extends equipo implements Asegurable
 {
     private int $ramGb;
 
-    #[Override]
     public function __construct(string $nombre, int $numero, float $precio, int $ramGb)
     {
         parent::__construct($nombre, $numero, $precio);

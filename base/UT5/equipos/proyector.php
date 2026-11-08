@@ -5,7 +5,7 @@ class proyector extends equipo
     public array $conexiones;
     private string $resolucion;
 
-    #[Override]
+
     public function __construct(string $nombre, int $numero, float $precio, array $conexiones, string $resolucion)
     {
         parent::__construct($nombre, $numero, $precio);

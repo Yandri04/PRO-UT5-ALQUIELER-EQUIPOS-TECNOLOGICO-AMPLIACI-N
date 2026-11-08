@@ -1,6 +1,7 @@
 <?php
-session_start();
 require_once '../tienda.php';
+session_start();
+
 
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -8,11 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uRecibido = $_POST['usuario'] ?? "";
 
     if (!empty($uRecibido)) {
-
         $tienda = $_SESSION["tienda"];
-
         $clienteEncontrado = $tienda->buscarClientePorNombre($uRecibido);
-
         if ($clienteEncontrado !== null) {
             $_SESSION['usuario_id'] = $clienteEncontrado->getId();
             $_SESSION['usuario_nombre'] = $clienteEncontrado->getNombre();

@@ -7,7 +7,7 @@ class camara extends equipo implements Asegurable
     private int $minIso;
     private int $maxIso;
 
-    #[Override]
+
     public function __construct(string $nombre, int $numero, float $precio, string $marca, int $minIso, int $maxIso)
     {
         parent::__construct($nombre, $numero, $precio);

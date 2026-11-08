@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '-/interfaces/alquilable.php';
-require_once __DIR__ . './interfaces/resumible.php';
+require_once __DIR__ . '/interfaces/alquilable.php';
+require_once __DIR__ . '/interfaces/resumible.php';
 
 abstract class equipo implements Alquilable , resumible
 {
@@ -31,7 +31,7 @@ abstract class equipo implements Alquilable , resumible
     {
         return $this->precio;
     }
-    //sa
+
     public function getPrecioConIva(): float
     {
         return round($this->precio + ($this->precio * self::IVA), 2);

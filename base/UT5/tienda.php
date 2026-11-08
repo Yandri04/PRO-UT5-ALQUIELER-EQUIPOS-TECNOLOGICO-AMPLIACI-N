@@ -2,11 +2,11 @@
 require_once __DIR__ . '/interfaces/alquilable.php';
 require_once __DIR__ . '/interfaces/asegurable.php';
 require_once __DIR__ . '/interfaces/resumible.php';
-require_once __DIR__ . '/ClasesGenerales/equipo.php';
+require_once __DIR__ . '/equipo.php';
 require_once __DIR__ . '/equipos/camara.php';
 require_once __DIR__ . '/equipos/portatil.php';
 require_once __DIR__ . '/equipos/proyector.php';
-require_once __DIR__ . '/ClasesGenerales/cliente.php';
+require_once __DIR__ . '/cliente.php';
 
 class tienda
 {
@@ -242,20 +242,21 @@ class tienda
         return $arrayOrdenadorPorNombre;
     }
 
+    
+    
     public function ordenarClientesPorAlquileres(): array
     {
         $arrayOrdenadorPorAlquileresClientes = $this->clientes;
         usort($arrayOrdenadorPorAlquileresClientes, fn($a, $b) => $a->numEquiposAlquilados() <=> $b->numEquiposAlquilados());
         return $arrayOrdenadorPorAlquileresClientes;
     }
-    public function buscarClientePorNombre(string $nombre)
-    {
-        foreach ($this->clientes as $cli) {
-            if ($cli->nombre === $nombre) {
-                return $cli;
-            } else {
-                return null;
+
+    public function buscarClientePorNombre(string $Nombre){
+        foreach ($this->clientes as $key => $value) {
+            if(strcasecmp($value->getNombre(), $Nombre) === 0){
+                return $value;
             }
         }
+        return null;
     }
 }
