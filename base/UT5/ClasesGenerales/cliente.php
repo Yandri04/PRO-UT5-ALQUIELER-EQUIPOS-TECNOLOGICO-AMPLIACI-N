@@ -1,6 +1,6 @@
 <?php
 require_once 'equipo.php';
-require_once __DIR__ . '/interfaces/resumible.php';
+require_once __DIR__ . './interfaces/resumible.php';
 class clientes implements resumible
 {
     public string $nombre;

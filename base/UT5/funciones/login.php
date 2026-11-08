@@ -1,30 +1,35 @@
 <?php
-
-require_once '../../UT4/tienda.php';
 session_start();
+require_once '../tienda.php';
 
+$error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $uRecibido = $_POST['usuario'] ?? "";
+
     if (!empty($uRecibido)) {
+
         $tienda = $_SESSION["tienda"];
+
         $clienteEncontrado = $tienda->buscarClientePorNombre($uRecibido);
+
         if ($clienteEncontrado !== null) {
-            $_SESSION['usuario_id'] = $clienteEncontrado->getId(); 
+            $_SESSION['usuario_id'] = $clienteEncontrado->getId();
             $_SESSION['usuario_nombre'] = $clienteEncontrado->getNombre();
-            setcookie("usuario_logiado", $uRecibido, [
-                "expires" => time() + (86400 * 30),
-                "path" => "/",
-                "secure" => false,
-                "httponly" => true
-            ]);
-            header("Location: ../../UT4/main.php");
+
+            header("Location: ../index.php");
             exit();
+        } else {
+            $error = "El cliente no existe";
         }
+    } else {
+        $error = "Introduce un nombre";
     }
 }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -35,11 +40,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <fieldset>
         <legend>Login</legend>
+
         <form action="" method="POST">
             <label for="usuario">Ingrese su usuario</label>
             <input type="text" id="usuario" name="usuario">
-            <button>Login</button>
+            <button type="submit">Login</button>
         </form>
+
+        <?php
+        if (!empty($error)) {
+            echo $error;
+        }
+        ?>
     </fieldset>
 </body>
 
