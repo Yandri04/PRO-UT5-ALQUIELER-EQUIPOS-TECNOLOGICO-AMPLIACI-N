@@ -32,13 +32,16 @@ if (!isset($_SESSION["tienda"])) {
 </head>
 
 <body>
-<header>
+    <header>
         <h1>Tienda</h1>
-        <form action="funciones/login.php" method="POST" style="display: inline;">
+        <form action="fase1/login.php" method="POST">
             <button type="submit">Login</button>
         </form>
-        <form action="funciones/logout.php" method="POST" style="display: inline;">
+        <form action="fase1/logout.php" method="POST">
             <button type="submit">Logout</button>
+        </form>
+        <form action="fase2/carrito.php" method="POST">
+            <button type="submit">Carrito</button>
         </form>
     </header>
     <form action="" method="POST">

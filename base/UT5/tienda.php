@@ -242,8 +242,8 @@ class tienda
         return $arrayOrdenadorPorNombre;
     }
 
-    
-    
+
+
     public function ordenarClientesPorAlquileres(): array
     {
         $arrayOrdenadorPorAlquileresClientes = $this->clientes;
@@ -251,9 +251,20 @@ class tienda
         return $arrayOrdenadorPorAlquileresClientes;
     }
 
-    public function buscarClientePorNombre(string $Nombre){
+    public function buscarClientePorNombre(string $Nombre)
+    {
         foreach ($this->clientes as $key => $value) {
-            if(strcasecmp($value->getNombre(), $Nombre) === 0){
+            if (strcasecmp($value->getNombre(), $Nombre) === 0) {
+                return $value;
+            }
+        }
+        return null;
+    }
+
+    public function buscarEquipoPorNumero(int $numero)
+    {
+        foreach ($this->equipos as $key => $value) {
+            if ($value->getNumero() === $numero) {
                 return $value;
             }
         }
