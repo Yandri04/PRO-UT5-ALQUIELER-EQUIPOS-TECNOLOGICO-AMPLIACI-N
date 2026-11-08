@@ -30,6 +30,6 @@ class portatil extends equipo implements Asegurable
     {
         $txt = parent::muestraResumen();
         $txt .= "la RAM para los portátiles:" . $this->ramGb;
-        return $txt;
+        return $txt . "<br>";
     }
 }

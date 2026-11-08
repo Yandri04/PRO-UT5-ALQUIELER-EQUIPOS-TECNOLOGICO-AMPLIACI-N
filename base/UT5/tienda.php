@@ -151,7 +151,7 @@ class tienda
 
     private function listar(string $cabecera, array $elementos): string
     {
-        $txt = "{$cabecera} \n";
+        $txt = "{$cabecera} " . "<br>";
         foreach ($elementos as $indice => $elemento) {
             $txt .= $elemento->muestraResumen() . "\n";
         }
@@ -171,13 +171,10 @@ class tienda
     public function alquilarClienteEquipo(int $idCliente, int $numEquipo): void
     {
 
-        // obtengo el equipo a comparar
-        // cmpruebo si el equipo ya esta aqluilado
         $equipoComparar = $this->equipos[$numEquipo];
         if ($equipoComparar->estaAlquilado()) {
             throw new Exception("EL EQUIPO YA ESTA ALQULADO");
         }
-        // obtengo el cliente 
         $cliBuscado = null;
         foreach ($this->clientes as $indice => $cliente) {
             if ($cliente->id === $idCliente) {
@@ -185,7 +182,6 @@ class tienda
                 break;
             }
         }
-        // verificamos que obtenemos el cliente si es null, no sacamos erro sino se alquila
         if ($cliBuscado === null) {
             throw new Exception("El cliente no existe");
         }

@@ -41,10 +41,33 @@ $ruta_carrito = empty($_SESSION['usuario_id']) ? "fase1/login.php" : "fase2/carr
             <button type="submit">Logout</button>
         </form>
         <form action="<?php echo $ruta_carrito; ?>" method="POST">
-
             <button type="submit">Carrito</button>
         </form>
     </header>
+    <fieldset>
+        <legend>
+            <h1>Productos</h1>
+        </legend>
+        <?php
+
+        $equiposTienda = $t1->equipos;
+
+        foreach ($equiposTienda as $key => $value) {
+            echo "<p>" . $value->muestraResumen() . "</p>";
+
+            if (isset($_SESSION['usuario_nombre'])) {
+        ?>
+                <form action="fase2/carrito.php" method="POST" style="display: inline-block; margin-bottom: 15px;">
+                    <button type="submit" name="nEquipo" value="<?php echo $value->getNumero(); ?>">
+                        Añadir al carrito
+                    </button>
+                </form>
+                <br>
+        <?php
+            }
+        }
+        ?>
+    </fieldset>
 
 
 </body>

@@ -38,6 +38,6 @@ class camara extends equipo implements Asegurable
         $txt = parent::muestraResumen();
         $txt .= "Marca:" . $this->marca;
         $txt .= "Rango ISO:" . $this->marca;
-        return $txt;
+        return $txt . "<br>";
     }
 }

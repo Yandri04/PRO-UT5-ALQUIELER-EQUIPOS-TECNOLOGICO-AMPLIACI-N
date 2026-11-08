@@ -24,9 +24,9 @@ class proyector extends equipo
     {
         $txt = parent::muestraResumen();
         foreach ($this->conexiones as $key => $value) {
-            $txt .= "CONEXIONES {$value} \n";
+            $txt .= " CONEXIONES {$value} \n";
         }
         $txt .= "Resolución:" . $this->resolucion;
-        return $txt;
+        return $txt . "<br>";
     }
 }
