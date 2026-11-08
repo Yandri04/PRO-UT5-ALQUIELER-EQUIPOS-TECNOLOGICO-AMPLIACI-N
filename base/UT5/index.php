@@ -18,7 +18,7 @@ if (!isset($_SESSION["tienda"])) {
 } else {
     $t1 = $_SESSION["tienda"];
 }
-
+$ruta_carrito = empty($_SESSION['usuario_id']) ? "fase1/login.php" : "fase2/carrito.php";
 ?>
 
 
@@ -40,17 +40,12 @@ if (!isset($_SESSION["tienda"])) {
         <form action="fase1/logout.php" method="POST">
             <button type="submit">Logout</button>
         </form>
-        <form action="fase2/carrito.php" method="POST">
+        <form action="<?php echo $ruta_carrito; ?>" method="POST">
+
             <button type="submit">Carrito</button>
         </form>
     </header>
-    <form action="" method="POST">
-        <fieldset>
-            <h2>OPCIONES DE LAS TIENDA</h2>
-            <button>buscarClientePorNombre</button>
 
-        </fieldset>
-    </form>
 
 </body>
 
